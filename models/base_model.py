@@ -19,8 +19,8 @@ class BaseModel:
         else:
             self.id = id
 
-        self.created_at = datetime.now()
-        self.updated_at = datetime.now()
+        self.created_at = datetime.utcnow()
+        self.updated_at = datetime.utcnow()
 
 
     def __str__(self):
@@ -29,12 +29,12 @@ class BaseModel:
 
     def save(self):
         """Update the updated_at attribute with the current datetime."""
-        self.updated_at = datetime.now()
+        self.updated_at = datetime.utcnow()
 
     def to_dict(self):
         """Return a dictionary representation of the instance."""
         Dict = self.__dict__.copy()
+        Dict['__class__'] = self.__class__.__name__
         Dict['created_at'] = self.created_at.isoformat()
         Dict['updated_at'] = self.updated_at.isoformat()
-        Dict['__class__'] = self.__class__.__name__
         return Dict
