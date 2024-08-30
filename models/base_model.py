@@ -22,11 +22,6 @@ class BaseModel:
         self.created_at = datetime.utcnow()
         self.updated_at = datetime.utcnow()
 
-
-    def __str__(self):
-        """Provides a readable string representation of the instance,"""
-        return f"[{self.__class__.__name__}] ({self.id}) {self.__dict__}"
-
     def save(self):
         """Update the updated_at attribute with the current datetime."""
         self.updated_at = datetime.utcnow()
@@ -38,3 +33,7 @@ class BaseModel:
         Dict['created_at'] = self.created_at.isoformat()
         Dict['updated_at'] = self.updated_at.isoformat()
         return Dict
+
+    def __str__(self):
+        """Provides a readable string representation of the instance,"""
+        return f"[{self.__class__.__name__}] ({self.id}) {self.__dict__}"
