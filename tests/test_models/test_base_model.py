@@ -14,7 +14,7 @@ class TestBaseModel(unittest.TestCase):
         """Set up for each test"""
         self.model = BaseModel()
 
-    def test_init(self):
+    def test_init_default(self):
         """Test instance creation"""
         self.assertIsInstance(self.model, BaseModel)
         self.assertIsInstance(self.model.id, str)
@@ -32,6 +32,19 @@ class TestBaseModel(unittest.TestCase):
         self.assertTrue(hasattr(self.model, "name"))
         self.assertTrue(hasattr(self.model, "my_number"))
 
+    def test_init_from_kwargs(self):
+         """Test initialization from kwargs"""
+         data = {
+                 'id': '1234',
+                 'created_at': '2024-09-01T12:00:00.000000',
+                 'updated_at': '2024-09-01T12:30:00.000000',
+                 'name': 'Test Model'
+                 }
+         model = BaseModel(**data)
+         self.assertEqual(model.id, '1234')
+         self.assertEqual(model.name, 'Test Model')
+         self.assertEqual(model.created_at, datetime.fromisoformat('2024-09-01T12:00:00.000000'))
+         self.assertEqual(model.updated_at, datetime.fromisoformat('2024-09-01T12:30:00.000000'))
     def test_save(self):
         """Test save method updates updated_at attribute"""
         old_up = self.model.updated_at
